@@ -1,0 +1,279 @@
+package com.sample.accounting;
+
+import com.sample.accounting.domain.accounting.AccountingRule;
+
+
+// ----------
+rule "product->businessGroup->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "businessGroup", condition == "include")
+then
+    modify(ar) {
+        setResult("ignore, ignore, ignore, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->businessGroup->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "businessGroup", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->businessGroup->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "businessGroup", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, market, buyer, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->businessGroup->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "businessGroup", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+
+// ----------
+rule "product->businessUnit->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "businessUnit", condition == "include")
+then
+    modify(ar) {
+        setResult("ignore, ignore, ignore, businessGroup, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->businessUnit->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "businessUnit", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->businessUnit->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "businessUnit", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, market, buyer, businessGroup, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->businessUnit->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "businessUnit", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+
+// ----------
+rule "product->buyer->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "buyer", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->buyer->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "buyer", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->buyer->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "buyer", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->buyer->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "buyer", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+
+// ----------
+rule "product->channel->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "channel", condition == "include")
+then
+    modify(ar) {
+        setResult("ignore, ignore, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->channel->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "channel", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->channel->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "channel", condition == "include")
+then
+    modify(ar) {
+        setResult("ignore, ignore, ignore, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->channel->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "channel", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, ignore, ignore, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+
+// ----------
+rule "product->market->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "market", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, ignore, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->market->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "market", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->market->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "market", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, ignore, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->market->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "market", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+
+// ----------
+rule "product->product->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "product", condition == "include")
+then
+    modify(ar) {
+        setResult("ignore, ignore, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "product->product->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "product", category == "product", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, product")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->product->include"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "product", condition == "include")
+then
+    modify(ar) {
+        setResult("channel, market, buyer, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->product->exclude"
+ruleflow-group "node"
+when
+    ar: AccountingRule(dimension == "channel", category == "product", condition == "exclude")
+then
+    modify(ar) {
+        setResult("channel, market, ignore, businessGroup, businessUnit, ignore")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end

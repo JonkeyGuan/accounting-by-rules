@@ -1,0 +1,26 @@
+package com.sample.accounting;
+
+import com.sample.accounting.domain.accounting.AccountingRule;
+
+// ----------
+rule "product->path"
+ruleflow-group "path"
+when
+    ar: AccountingRule(dimension == "product")
+then
+    modify(ar) {
+        setResult("workHours, workHoursNoneBG, accountingMerge, product, businessUnit, businessGroup, buyer, market, channel")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+
+rule "channel->path"
+ruleflow-group "path"
+when
+    ar: AccountingRule(dimension == "channel")
+then
+    modify(ar) {
+        setResult("buyer, market, channel, product, businessUnit, businessGroup")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end

@@ -5,11 +5,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.sample.accounting.gateway.RulesGateway;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component("accountingMerge")
 public class AccountingMerge implements BaseAccounting {
 
+    @Autowired
+    RulesGateway rulesGateway;
+    
     @Override
     public List<AccountingItem> accountForChannel(List<AccountingItem> items) {
         return account(items);
@@ -21,8 +27,7 @@ public class AccountingMerge implements BaseAccounting {
     }
 
     private List<AccountingItem> account(List<AccountingItem> items) {
-        List<String> condition = List.of("channel", "market", "buyer", "businessGroup", "businessUnit", "product",
-                "subCatalog", "catalog");
+        List<String> condition = rulesGateway.infer(new AccountingRule("merge", "product"));
         Map<String, AccountingItem> map = new LinkedHashMap<>();
         items.forEach(item -> {
             String key = AccountingItemUtils.getMergeKey(item, condition);

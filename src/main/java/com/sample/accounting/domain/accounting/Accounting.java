@@ -3,6 +3,7 @@ package com.sample.accounting.domain.accounting;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.sample.accounting.gateway.RulesGateway;
 import com.sample.accounting.repository.AccountingRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,14 +20,15 @@ public class Accounting {
     ApplicationContext applicationContext;
 
     @Autowired
+    RulesGateway rulesGateway;
+
+    @Autowired
     private AccountingRepository repository;
 
     public void accountingByProduct() {
         List<AccountingItem> items = repository.load();
         // log.info("raw data: " + items);
-        List<BaseAccounting> path = assembleAccountingPath(
-                List.of("workHours", "workHoursNoneBG", "accountingMerge", "product", "businessUnit", "businessGroup",
-                        "buyer", "market", "channel"));
+        List<BaseAccounting> path = assembleAccountingPath(rulesGateway.infer(new AccountingRule("path", "product")));
         for (BaseAccounting node : path) {
             List<AccountingItem> expandItems = node.accountForProduct(items);
             items = expandItems;
@@ -38,8 +40,7 @@ public class Accounting {
     public void accountingByChannel() {
         List<AccountingItem> items = repository.load();
         // log.info("raw data: " + items);
-        List<BaseAccounting> path = assembleAccountingPath(
-                List.of("buyer", "market", "channel", "product", "businessUnit", "businessGroup"));
+        List<BaseAccounting> path = assembleAccountingPath(rulesGateway.infer(new AccountingRule("path", "channel")));
         for (BaseAccounting node : path) {
             List<AccountingItem> expandItems = node.accountForChannel(items);
             items = expandItems;

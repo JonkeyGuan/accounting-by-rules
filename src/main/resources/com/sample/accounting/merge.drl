@@ -1,0 +1,17 @@
+package com.sample.accounting;
+
+import com.sample.accounting.domain.accounting.AccountingRule;
+
+
+// ----------
+rule "product->merge"
+ruleflow-group "merge"
+when
+    ar: AccountingRule(dimension == "product")
+then
+    modify(ar) {
+        setResult("channel, market, buyer, businessGroup, businessUnit, product, subCatalog, catalog")
+    }
+    System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
+end
+

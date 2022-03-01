@@ -81,4 +81,19 @@ public class AccountingItemUtils {
         });
         return result;
     }
+
+    public static boolean evaluateCannotExpand(AccountingItem item, List<String> expressions) {
+        String indicator = expressions.get(0).trim();
+        String leftFieldName = expressions.get(1).trim();
+        String rightValue = expressions.get(2).trim();
+
+        if (indicator.equals("yes")) {
+            return true;
+        } else if (indicator.equals("no")) {
+            return false;
+        } else if (getValue(item, leftFieldName).equals(rightValue)) {
+            return true;
+        }
+        return false;
+    }
 }
