@@ -23,17 +23,25 @@ public class DroolsGateway implements RulesGateway {
 
     @Override
     public List<String> infer(AccountingRule accountingRule) {
+        DroolsAccountingRule droolsAccountingRule = DroolsAccountingRule.builder()
+                .context(accountingRule.getContext())
+                .dimension(accountingRule.getDimension())
+                .category(accountingRule.getCategory())
+                .condition(accountingRule.getCondition())
+                .build();
+
         KieSession kieSession = kieContainer.newKieSession();
-        kieSession.insert(accountingRule);
-        ((InternalAgenda) kieSession.getAgenda()).activateRuleFlowGroup(accountingRule.getContext());
+        kieSession.insert(droolsAccountingRule);
+        ((InternalAgenda) kieSession.getAgenda()).activateRuleFlowGroup(droolsAccountingRule.getContext());
         kieSession.fireAllRules();
         kieSession.dispose();
 
-        Collection<? extends Object> collection = kieSession.getObjects(new ClassObjectFilter(AccountingRule.class));
-        AccountingRule rule = null;
+        Collection<? extends Object> collection = kieSession
+                .getObjects(new ClassObjectFilter(DroolsAccountingRule.class));
+        DroolsAccountingRule rule = null;
         for (Object o : collection) {
             if (o != null) {
-                rule = (AccountingRule) o;
+                rule = (DroolsAccountingRule) o;
                 break;
             }
         }

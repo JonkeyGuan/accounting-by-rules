@@ -1,15 +1,15 @@
 package com.sample.accounting;
 
-import com.sample.accounting.domain.accounting.AccountingRule;
+import com.sample.accounting.gateway.drools.DroolsAccountingRule;
 
 
 // ----------
 rule "both->expand->businessGroup"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "businessGroup")
+    dar: DroolsAccountingRule(category == "businessGroup")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("no, na, na")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
@@ -20,9 +20,9 @@ end
 rule "both->expand->businessUnit"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "businessUnit")
+    dar: DroolsAccountingRule(category == "businessUnit")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("na, businessGroup, ALL")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
@@ -32,9 +32,9 @@ end
 rule "both->expand->product"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "product")
+    dar: DroolsAccountingRule(category == "product")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("na, businessUnit, ALL")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
@@ -45,9 +45,9 @@ end
 rule "both->expand->channel"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "channel")
+    dar: DroolsAccountingRule(category == "channel")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("no, na, na")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
@@ -58,9 +58,9 @@ end
 rule "both->expand->market"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "market")
+    dar: DroolsAccountingRule(category == "market")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("na, channel, ALL")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");
@@ -71,9 +71,9 @@ end
 rule "both->expand->buyer"
 ruleflow-group "expand"
 when
-    ar: AccountingRule(category == "buyer")
+    dar: DroolsAccountingRule(category == "buyer")
 then
-    modify(ar) {
+    modify(dar) {
         setResult("yes, na, na")
     }
     System.out.println("rule [" + drools.getRule().getName()+ "] is fired.");

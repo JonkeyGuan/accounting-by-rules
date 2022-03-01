@@ -17,7 +17,6 @@ public class AccountingRule {
     private String dimension;
     private String category;
     private String condition;
-    private String result;
 
     public AccountingRule(String context, String dimension) {
         this.context = context;
@@ -28,12 +27,5 @@ public class AccountingRule {
         this.context = context;
         this.dimension = dimension;
         this.category = category;
-    }
-
-    public AccountingRule(String context, String dimension, String category, String condition) {
-        this.context = context;
-        this.dimension = dimension;
-        this.category = category;
-        this.condition = condition;
     }
 }
